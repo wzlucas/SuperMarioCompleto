@@ -156,7 +156,7 @@ include_once(__DIR__ . "/../include/header.php");
                     if (resposta.sucesso) {
                         mensagemDiv.innerHTML = `
                             <div class="alert alert-success">
-                                ✅ ${resposta.mensagem}
+                                 ${resposta.mensagem}
                             </div>
                         `;
                         
@@ -167,7 +167,7 @@ include_once(__DIR__ . "/../include/header.php");
                     } else {
                         mensagemDiv.innerHTML = `
                             <div class="alert alert-danger">
-                                ❌ ${resposta.erro}
+                                 ${resposta.erro}
                             </div>
                         `;
                     }
