@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/../util/Connection.php");
 require_once(__DIR__ . "/../model/Produto.php");
 require_once(__DIR__ . "/../model/Categoria.php");
+require_once(__DIR__ . "/../model/Marca.php");
 require_once(__DIR__ . "/../model/Distribuidor.php");
 
 class ProdutoDAO
@@ -18,12 +19,15 @@ class ProdutoDAO
     public function listar()
     {
         $sql = "SELECT p.*, 
-                    c.nome nome_categoria, 
-                    d.nome nome_distribuidor 
-                FROM produtos p
-                    JOIN categorias c ON (c.id = p.id_categoria)
-                    JOIN distribuidores d ON (d.id = p.id_distribuidor)
-                ORDER BY p.nome";
+        c.nome nome_categoria, 
+        d.nome nome_distribuidor,
+        m.nome nome_marca,
+        m.id id_marca
+        FROM produtos p
+        JOIN categorias c ON (c.id = p.id_categoria)
+        JOIN distribuidores d ON (d.id = p.id_distribuidor)
+        JOIN marcas m ON (m.id = p.id_marca)
+        ORDER BY p.nome";
         $stm = $this->conexao->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();
@@ -55,16 +59,17 @@ class ProdutoDAO
     public function inserir(Produto $produto)
     {
         try {
-            $sql = "INSERT INTO produtos (nome, preco, descricao, quantidade_estoque, id_categoria, id_distribuidor)
-                    VALUES (?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO produtos (nome, preco, descricao, quantidade_estoque, id_categoria, id_distribuidor, id_marca)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stm = $this->conexao->prepare($sql);
             $stm->execute([
-                $produto->getNome(),
-                $produto->getPreco(),
-                $produto->getDescricao(),
-                $produto->getQuantidadeEstoque(),
-                $produto->getCategoria()->getId(),
-                $produto->getDistribuidor()->getId()
+            $produto->getNome(),
+            $produto->getPreco(),
+            $produto->getDescricao(),
+            $produto->getQuantidadeEstoque(),
+            $produto->getCategoria()->getId(),
+            $produto->getDistribuidor()->getId(),
+            $produto->getMarca()->getId() 
             ]);
             return NULL;
         } catch (PDOException $e) {
@@ -130,6 +135,11 @@ class ProdutoDAO
             $distribuidor->setNome($r["nome_distribuidor"]);
             $produto->setDistribuidor($distribuidor);
 
+            $marca = new Marca();
+            $marca->setId($r["id_marca"]);
+            $marca->setNome($r["nome_marca"]);
+            $produto->setMarca($marca);
+        
             array_push($produtos, $produto);
         }
         return $produtos;

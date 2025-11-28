@@ -37,6 +37,10 @@ class ProdutoService
             array_push($erros, "Informe o distribuidor do produto!");
         }
 
-        return $erros;
+         if (!$produto->getMarca()) {
+        array_push($erros, "Informe a marca do produto!");
+        }
+    
+    return $erros;
     }
 }

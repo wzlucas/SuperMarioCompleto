@@ -21,6 +21,7 @@ include_once(__DIR__ . "/../include/header.php");
         <th>Descrição</th>
         <th>Qtd. Estoque</th>
         <th>Categoria</th>
+        <th>Marca</th>
         <th>Distribuidor</th>
         <th></th>
         <th></th>
@@ -34,6 +35,7 @@ include_once(__DIR__ . "/../include/header.php");
             <td><?= $produto->getDescricao() ?></td>
             <td><?= $produto->getQuantidadeEstoque() ?></td>
             <td><?= $produto->getCategoria() ?></td>
+            <td><?= $produto->getMarca() ?></td>
             <td><?= $produto->getDistribuidor() ?></td>
             <td>
                 <a href="alterarP.php?id=<?= $produto->getId() ?>">
