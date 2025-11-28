@@ -35,7 +35,7 @@
 
             <div class="col-3">
                 <div class="card text-center">
-                    <img class="card-image-top mx-auto" src="img/Distribuidor.png"
+                    <img class="card-image-top mx-auto" src="img/distribuidor.png"
                         style="max-width: 200px; height: auto;" />
 
                     <div class="card-body">
