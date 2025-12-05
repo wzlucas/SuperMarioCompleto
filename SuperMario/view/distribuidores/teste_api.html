@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste API</title>
+</head>
+<body>
+    <h1>Teste Direto da API</h1>
+    <button onclick="testarAPI()">Testar Salvamento</button>
+    <div id="resultado"></div>
+
+    <script>
+    function testarAPI() {
+        const dados = new FormData();
+        dados.append("nome", "Produto Teste");
+        dados.append("preco", "100.50");
+        dados.append("descricao", "Descrição teste");
+        dados.append("quantidade_estoque", "10");
+        dados.append("categoria", "1"); // Use um ID que existe
+        dados.append("marca", "1"); // Use um ID que existe  
+        dados.append("distribuidor", "1"); // Use um ID que existe
+        dados.append("id", "0");
+
+        fetch("../../api/produtos_salvar.php", {
+            method: "POST",
+            body: dados
+        })
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("resultado").innerHTML = 
+                "<h3>Resposta:</h3><pre>" + data + "</pre>";
+        })
+        .catch(error => {
+            document.getElementById("resultado").innerHTML = 
+                "<h3>Erro:</h3><pre>" + error + "</pre>";
+        });
+    }
+    </script>
+</body>
+</html>
